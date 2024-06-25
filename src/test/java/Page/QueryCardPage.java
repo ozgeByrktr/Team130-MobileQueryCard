@@ -3,21 +3,19 @@ package Page;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import lombok.Getter;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utilities.Driver;
+
+import utilities.ConfigReader;
 import utilities.ReusableMethods;
 
 
-import java.awt.*;
-import java.time.Duration;
-
 import static org.junit.Assert.assertTrue;
 import static utilities.Driver.getAppiumDriver;
-
+@Getter
 public class QueryCardPage {
    public QueryCardPage(){
        PageFactory.initElements(new AppiumFieldDecorator(getAppiumDriver()),this);
@@ -27,10 +25,21 @@ public class QueryCardPage {
     private WebElement queryCardLogoElement;
     @AndroidFindBy (xpath = "(//android.widget.ImageView[1])[2]")
     private WebElement searchBoxElement;
-    @AndroidFindBy (accessibility = "Sign In")
-    private WebElement signInButton;
-    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc='Profile']")
-    private WebElement profileImageView;
+    @AndroidFindBy (uiAutomator = "new UiSelector().description(\"Sign In\").instance(1)")
+    private WebElement signInLoginButton;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(0)")
+    private WebElement phoneTextBox;
+    @AndroidFindBy(accessibility = "See All")
+    private WebElement seeAllIconElement;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(1)")
+    private WebElement passwordTextBox;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").instance(2)")
+    private WebElement rememberMeCheckBox;
+
+
+
+
+
 
 
     public void LogoGorunurTest(){
@@ -41,22 +50,37 @@ public class QueryCardPage {
                 throw new RuntimeException(e);
             }
             assertTrue(queryCardLogoElement.isDisplayed());
+            queryCardLogoElement.click();
         }
+    public  void Login (String phoneNumber,String password){
+        Actions actions = new Actions(getAppiumDriver());
+        phoneTextBoxClickAndSendKeys(ConfigReader.getProperty(phoneNumber));
+        // Telefon numarası alanından sonra Tab ile şifre alanına geç
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(ConfigReader.getProperty(password)).perform();
+        ReusableMethods.wait(1);
+        // Şifre alanından sonra Tab ile "remember me" checkbox'ına geç
+        actions.sendKeys(Keys.TAB).perform();
+        signInLoginClick();
+    }
 
 
     public void SearchBoxGorunurlukClickTest(){
         assertTrue(searchBoxElement.isDisplayed());
         searchBoxElement.click();
     }
-    public void profileImageViewClickTest(){
-        assertTrue(profileImageView.isDisplayed());
-        profileImageView.click();
+    public void phoneTextBoxClickAndSendKeys(String phoneNumber){
+        assertTrue(phoneTextBox.isDisplayed());
+        phoneTextBox.click();
+        phoneTextBox.sendKeys(phoneNumber);
     }
-    public void signInClick(){
-        assertTrue(signInButton.isDisplayed());
-        signInButton.click();
+    public void signInLoginClick(){
+        assertTrue(signInLoginButton.isDisplayed());
+        signInLoginButton.click();
+    }
+
     }
 
 
 
-}
+
