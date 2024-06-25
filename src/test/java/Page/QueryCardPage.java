@@ -35,6 +35,8 @@ public class QueryCardPage {
     private WebElement passwordTextBox;
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").instance(2)")
     private WebElement rememberMeCheckBox;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").instance(4)")
+    private WebElement addWishListToast;
 
 
 
@@ -77,6 +79,10 @@ public class QueryCardPage {
     public void signInLoginClick(){
         assertTrue(signInLoginButton.isDisplayed());
         signInLoginButton.click();
+    }
+    public void wishListToast(){
+        System.out.println(addWishListToast.getText());
+        assertTrue(addWishListToast.isEnabled());
     }
 
     }
