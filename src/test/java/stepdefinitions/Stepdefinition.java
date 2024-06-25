@@ -79,6 +79,7 @@ public class Stepdefinition extends OptionsMet {
     }
     @Given("Toaster is displayed")
     public void toast_is_displayed() {
+        card.wishListToast();
 
     }
 
