@@ -13,14 +13,15 @@ import org.openqa.selenium.interactions.Sequence;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static utilities.Driver.getAppiumDriver;
 
 public class OptionsMet {
-
-
+//
     public static void swipe(int x, int y, int endX, int endY) throws InvalidMidiDataException {
         /******  PointerInput ve Sequence Kullanımı: PointerInput ile parmak hareketlerini
          *      ve Sequence ile bu hareketlerin sırasını tanımlıyoruz.
@@ -44,9 +45,9 @@ public class OptionsMet {
     public static void touchDown(int x, int y) {
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
         Point tapPoint = new Point(x, y);
-        Sequence tap = new Sequence(finger, 1);
-        tap.addAction(finger.createPointerMove(Duration.ofMillis(0),
-                PointerInput.Origin.viewport(), tapPoint.x, tapPoint.y));
+        Sequence tap = new Sequence(finger, 1); //sıralama diziye alma
+        tap.addAction(finger.createPointerMove(Duration.ofMillis(0),//parmak olustur
+                PointerInput.Origin.viewport(), tapPoint.x, tapPoint.y)); //
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
         tap.addAction(new Pause(finger, Duration.ofMillis(50)));
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
@@ -110,5 +111,6 @@ public class OptionsMet {
         element.click();
 
     }
+
 }
 

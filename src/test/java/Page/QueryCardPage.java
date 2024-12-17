@@ -13,19 +13,25 @@ import utilities.ConfigReader;
 import utilities.ReusableMethods;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 import static utilities.Driver.getAppiumDriver;
+
 @Getter
 public class QueryCardPage {
-   public QueryCardPage(){
-       PageFactory.initElements(new AppiumFieldDecorator(getAppiumDriver()),this);
+    public QueryCardPage() {
+        PageFactory.initElements(new AppiumFieldDecorator(getAppiumDriver()), this);
 
     }
+
     @AndroidFindBy(xpath = "(//android.widget.ImageView[1])[1]")
     private WebElement queryCardLogoElement;
-    @AndroidFindBy (xpath = "(//android.widget.ImageView[1])[2]")
+    @AndroidFindBy(xpath = "(//android.widget.ImageView[1])[2]")
     private WebElement searchBoxElement;
-    @AndroidFindBy (uiAutomator = "new UiSelector().description(\"Sign In\").instance(1)")
+    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"Sign In\").instance(1)")
     private WebElement signInLoginButton;
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(0)")
     private WebElement phoneTextBox;
@@ -37,24 +43,28 @@ public class QueryCardPage {
     private WebElement rememberMeCheckBox;
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").instance(4)")
     private WebElement addWishListToast;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").instance(9)")
+    private List<WebElement> categories;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\")")
+    private WebElement forgotPssPhoneBox;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(0)")
+    private WebElement newPasswordBox;
+    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(1)")
+    private WebElement confirmPasswordBox;
 
 
+    public void LogoGorunurTest() {
 
-
-
-
-
-    public void LogoGorunurTest(){
-
-            try {
-               Thread.sleep(6000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            assertTrue(queryCardLogoElement.isDisplayed());
-            queryCardLogoElement.click();
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-    public  void Login (String phoneNumber,String password){
+        assertTrue(queryCardLogoElement.isDisplayed());
+        queryCardLogoElement.click();
+    }
+
+    public void Login(String phoneNumber, String password) {
         Actions actions = new Actions(getAppiumDriver());
         phoneTextBoxClickAndSendKeys(ConfigReader.getProperty(phoneNumber));
         // Telefon numarası alanından sonra Tab ile şifre alanına geç
@@ -67,25 +77,50 @@ public class QueryCardPage {
     }
 
 
-    public void SearchBoxGorunurlukClickTest(){
+    public void SearchBoxGorunurlukClickTest() {
         assertTrue(searchBoxElement.isDisplayed());
         searchBoxElement.click();
     }
-    public void phoneTextBoxClickAndSendKeys(String phoneNumber){
+
+    public void phoneTextBoxClickAndSendKeys(String phoneNumber) {
         assertTrue(phoneTextBox.isDisplayed());
         phoneTextBox.click();
         phoneTextBox.sendKeys(phoneNumber);
     }
-    public void signInLoginClick(){
+
+    public void signInLoginClick() {
         assertTrue(signInLoginButton.isDisplayed());
         signInLoginButton.click();
     }
-    public void wishListToast(){
+
+    public void wishListToast() {
         System.out.println(addWishListToast.getText());
         assertTrue(addWishListToast.isEnabled());
     }
 
+    public void ForgetPasswordPhoneBox(String phoneNumber) {
+        assertTrue(forgotPssPhoneBox.isDisplayed());
+        assertTrue(forgotPssPhoneBox.isEnabled());
+        forgotPssPhoneBox.click();
+        forgotPssPhoneBox.sendKeys(phoneNumber);
+
     }
+
+    public void NewPassword(String newPassword) {
+        assertTrue(newPasswordBox.isDisplayed());
+        assertTrue(newPasswordBox.isEnabled());
+        newPasswordBox.click();
+        newPasswordBox.sendKeys(newPassword);
+        assertTrue(confirmPasswordBox.isDisplayed());
+        assertTrue(confirmPasswordBox.isEnabled());
+        confirmPasswordBox.click();
+        confirmPasswordBox.sendKeys(newPassword);
+
+    }
+
+}
+
+
 
 
 

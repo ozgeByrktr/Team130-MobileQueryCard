@@ -8,9 +8,10 @@ import org.openqa.selenium.interactions.Actions;
 import utilities.OptionsMet;
 import utilities.ReusableMethods;
 
-import javax.sound.midi.InvalidMidiDataException;
-import javax.swing.*;
 
+import javax.sound.midi.InvalidMidiDataException;
+
+import static org.junit.Assert.assertTrue;
 import static utilities.Driver.getAppiumDriver;
 import static utilities.Driver.quitAppiumDriver;
 
@@ -81,6 +82,32 @@ public class Stepdefinition extends OptionsMet {
     public void toast_is_displayed() {
         card.wishListToast();
 
+    }
+    @Given("User confirms that categories appear on the screen")
+    public void user_confirms_that_categories_appear_on_the_screen(){
+       // for (int i = 0; i <categoriesMen.size(); i++) {
+        //    assertTrue(categoriesMen.get(i).);
+      //  }
+    }
+
+    @Given("User clicks phone number textbox and {string} phone number")
+    public void user_clicks_phone_number_textbox_and_phone_number(String phoneNumber) {
+     card. ForgetPasswordPhoneBox(phoneNumber);
+    }
+    @Given("User clicks NewPasswordTextBox and confirmPasswordTextBox {string}")
+    public void user_clicks_new_password_text_box_and_confirm_password_text_box(String newPassword) {
+        card.NewPassword(newPassword);
+    }
+    @Given("User clicks tap coordinates {int}, {int}")
+    public void user_clicks_tap_coordinates(Integer x, Integer y) {
+        ReusableMethods.wait(1);
+        OptionsMet.touchDown(x,y);
+        ReusableMethods.wait(1);
+    }
+    @Given("User swipe to screen coordinates {int}, {int}, {int}, {int}")
+    public void user_swipe_to_screen_coordinates(Integer x, Integer y, Integer endX, Integer endY) throws InvalidMidiDataException {
+        OptionsMet.swipe(x,y,endX,endY);
+        ReusableMethods.wait(2);
     }
 
 
